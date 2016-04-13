@@ -14,6 +14,7 @@ const initialState = fromJS({
 });
 
 function update(state = initialState, action) {
+  dump('ACTION ' + JSON.stringify(action) + '\n');
   switch (action.type) {
     case constants.ADD_SOURCE:
       return state.mergeIn(["sources", action.source.actor], action.source);

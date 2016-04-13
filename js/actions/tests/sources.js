@@ -1,9 +1,46 @@
 "use strict";
 
 const { createStore, actions, queries } = require("../../util/test-head");
-const store = createStore();
+
+const mockThreadClient = {
+  currentSourceText: {
+    "foo1": { source: "function() {\n  return 5;\n}",
+              contentType: "text/javascript" },
+    "foo2": { source: "function(x, y) {\n  return x + y;\n}",
+              contentType: "text/javascript" }
+  },
+
+  source: function(form) {
+    return {
+      source: () => {
+        return new Promise((resolve, reject) => {
+          resolve(mockThreadClient.currentSourceText[form.actor]);
+        });
+      }
+    };
+  }
+}
+const store = createStore(mockThreadClient);
+
+// function waitForState(predicate, fn) {
+//   store.subscribe(state => {
+//     if(predicate(state)) {
+//       fn(state);
+//     }
+//   });
+// }
 
 function run_test() {
+  store.dispatch(actions.loadSourceText({ actor: "foo1" })).then(() => {
+    dump('JWL here\n');
+    equal(queries.getSourceText(store.getState(), "foo1").text,
+          "function() {\n  return 5;\n}");
+  }).catch(err => dump('ERROR: ' + err + '\n'));
+
+  run_next_test();
+}
+
+function old_test() {
   store.dispatch(actions.newSource({
     url: "http://example.com/foo1.js",
     actor: "foo1"

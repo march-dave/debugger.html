@@ -197,6 +197,7 @@ function loadSourceText(source) {
           dispatch(togglePrettyPrint(source));
         }
 
+        dump('response: ' + JSON.stringify(response) + '\n');
         return { text: response.source,
                  contentType: response.contentType };
       })

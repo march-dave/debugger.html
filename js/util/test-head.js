@@ -7,8 +7,9 @@ const constants = require("../constants");
 const configureStore = require("../create-store");
 const queries = require("../queries");
 
-const mockThreadClient = {
-};
+// const mockThreadClient = {
+// };
+let mockThreadClient;
 
 const _createStore = configureStore({
   log: false,
@@ -17,7 +18,8 @@ const _createStore = configureStore({
   }
 });
 
-function createStore() {
+function createStore(threadClient) {
+  mockThreadClient = threadClient;
   return _createStore(combineReducers(reducers));
 }
 
