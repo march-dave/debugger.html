@@ -15,7 +15,8 @@ let config = {
   devtool: "source-map",
   output: {
     path: path.join(__dirname, "public/build"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    publicPath: "/public/build"
   },
   resolve: {
     // This is required to allow ff-devtools-libs to resolve modules

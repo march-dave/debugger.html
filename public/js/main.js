@@ -5,12 +5,12 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 const { bindActionCreators, combineReducers } = require("redux");
 const { Provider } = require("react-redux");
+const { AppContainer } = require("react-hot-loader");
 
 const configureStore = require("./create-store");
 const reducers = require("./reducers");
 const { connectToClient, getThreadClient, debugTab } = require("./client");
 const actions = require("./actions");
-const TabList = React.createFactory(require("./components/TabList"));
 
 const createStore = configureStore({
   log: false,
@@ -68,10 +68,20 @@ function getSelectedTab(tabs) {
 function renderToolbox() {
   ReactDOM.render(
     React.createElement(
-      Provider,
-      { store },
-      TabList()
+      AppContainer,
+      null,
+      React.createElement(
+        Provider,
+        { store },
+        React.createElement(require("./components/TabList"))
+      )
     ),
     document.querySelector("#mount")
   );
+}
+
+if(module.hot) {
+  module.hot.accept('./components/TabList.js', () => {
+    renderToolbox();
+  });
 }
