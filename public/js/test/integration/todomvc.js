@@ -8,6 +8,7 @@ describe("Todo MVC", function() {
 
     // pause and check the first frame
     addTodo();
+    cy.wait(1000);
     callStackFrameAtIndex(0).contains("initialize");
 
     // select the second frame and check to see the source updated

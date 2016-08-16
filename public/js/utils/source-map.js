@@ -27,7 +27,7 @@ function makeOriginalSource({ url, source, id = 1 }) {
   const generatedSourceId = source.id;
   return {
     url,
-    id: JSON.stringify({ generatedSourceId, id }),
+    id: `${generatedSourceId}/originalSource${id}`,
     isPrettyPrinted: false
   };
 }
